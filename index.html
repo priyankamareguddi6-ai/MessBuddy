@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Buddy- Smart Hostel Feedback Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Navigation -->
+    <nav id="navbar" class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-utensils text-2xl text-primary-600 dark:text-primary-400 mr-3"></i>
+                        <span class="text-xl font-bold text-gray-900 dark:text-white">Mess Buddy AI</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="#dashboard" class="nav-link text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="#menu" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Menu</a>
+                        <a href="#feedback" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                        <a href="#recommendations" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">AI Recommendations</a>
+                        <a href="#nutrition" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Nutrition</a>
+                        <a href="#social" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Social</a>
+                        <a href="#analytics" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Analytics</a>
+                        <a href="#complaints" class="nav-link text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium">Complaints</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <div class="relative">
+                        <button id="notificationBtn" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 relative">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img id="userAvatar" src="https://picsum.photos/seed/user/40/40.jpg" alt="User" class="h-8 w-8 rounded-full">
+                        <span id="userName" class="text-sm font-medium text-gray-700 dark:text-gray-300">Student</span>
+                        <button id="logoutBtn" class="text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <i class="fas fa-utensils text-6xl text-primary-600 dark:text-primary-400 mb-4"></i>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Mess Buddy AI</h2>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Transform your hostel mess experience</p>
+            </div>
+            <form id="loginForm" class="mt-8 space-y-6 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl">
+                <div class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
+                        <input id="email" name="email" type="email" required class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                        <input id="password" name="password" type="password" required class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    <div class="flex items-center">
+                        <input id="anonymousMode" name="anonymousMode" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                        <label for="anonymousMode" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">Anonymous mode</label>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Sign in
+                    </button>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Don't have an account? 
+                        <a href="#" id="showSignup" class="font-medium text-primary-600 hover:text-primary-500">Sign up</a>
+                    </p>
+                </div>
+                <div class="text-center">
+                    <button type="button" id="adminLogin" class="text-sm text-primary-600 hover:text-primary-500">
+                        Login as Admin
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Welcome back! Here's what's happening in your mess today.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Today's Average Rating</dt>
+                                    <dd class="text-lg font-medium text-gray-900 dark:text-white">4.2 ⭐</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-smile text-green-400 text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Satisfaction Score</dt>
+                                    <dd class="text-lg font-medium text-gray-900 dark:text-white">87%</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-comments text-blue-400 text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Reviews Today</dt>
+                                    <dd class="text-lg font-medium text-gray-900 dark:text-white">156</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-red-400 text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Pending Complaints</dt>
+                                    <dd class="text-lg font-medium text-gray-900 dark:text-white">8</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-robot text-primary-600 mr-2"></i>AI Insights
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <span class="text-green-400">👍</span>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Most Loved Dish</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Butter Chicken with Naan - 4.8⭐</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <span class="text-red-400">👎</span>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Top Complaint Today</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Food too salty in lunch items</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <span class="text-yellow-400">💡</span>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">AI Suggestion</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Reduce spice level for dinner tomorrow</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-chart-line text-primary-600 mr-2"></i>Quick Stats
+                    </h3>
+                    <canvas id="quickStatsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+                    <div id="recentActivity" class="space-y-4">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menuPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Today's Menu</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Rate and provide feedback on today's meals</p>
+            </div>
+
+            <!-- Meal Sections -->
+            <div class="space-y-8">
+                <!-- Breakfast -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <i class="fas fa-sun text-yellow-400 mr-2"></i>Breakfast (7:00 AM - 9:00 AM)
+                        </h2>
+                    </div>
+                    <div id="breakfastItems" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Lunch -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <i class="fas fa-sun text-orange-400 mr-2"></i>Lunch (12:00 PM - 2:00 PM)
+                        </h2>
+                    </div>
+                    <div id="lunchItems" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Snacks -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <i class="fas fa-cookie text-brown-400 mr-2"></i>Snacks (4:00 PM - 6:00 PM)
+                        </h2>
+                    </div>
+                    <div id="snacksItems" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Dinner -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <i class="fas fa-moon text-blue-400 mr-2"></i>Dinner (7:00 PM - 9:00 PM)
+                        </h2>
+                    </div>
+                    <div id="dinnerItems" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Page -->
+    <div id="analyticsPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Real-time insights and trends</p>
+            </div>
+
+            <!-- Time Filter -->
+            <div class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-md bg-primary-600 text-white" data-period="today">Today</button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-period="week">This Week</button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-period="month">This Month</button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-period="year">This Year</button>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Rating Trends</h3>
+                    <canvas id="ratingTrendsChart"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Satisfaction Score</h3>
+                    <canvas id="satisfactionChart"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Complaint Categories</h3>
+                    <canvas id="complaintCategoriesChart"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Meal Type Performance</h3>
+                    <canvas id="mealPerformanceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Predictive Insights -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-crystal-ball text-purple-600 mr-2"></i>Predictive Insights
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Tomorrow's Prediction</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Lunch may receive low ratings. Consider reducing spice levels.</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Medium Confidence</span>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Weekly Trend</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Weekend dinner ratings consistently 15% lower than weekdays.</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">High Confidence</span>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Improvement Suggestion</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Add more variety to breakfast menu to improve satisfaction.</p>
+                        <div class="mt-2">
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">AI Recommended</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaints Page -->
+    <div id="complaintsPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Complaints</h1>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Track and manage mess-related issues</p>
+                </div>
+                <button id="raiseComplaintBtn" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                    <i class="fas fa-plus mr-2"></i>Raise Complaint
+                </button>
+            </div>
+
+            <!-- Complaint Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Total</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">45</p>
+                        </div>
+                        <i class="fas fa-list text-gray-400 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Pending</p>
+                            <p class="text-2xl font-bold text-yellow-600">12</p>
+                        </div>
+                        <i class="fas fa-clock text-yellow-400 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Resolved</p>
+                            <p class="text-2xl font-bold text-green-600">28</p>
+                        </div>
+                        <i class="fas fa-check text-green-400 text-2xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">High Priority</p>
+                            <p class="text-2xl font-bold text-red-600">5</p>
+                        </div>
+                        <i class="fas fa-exclamation-triangle text-red-400 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complaints List -->
+            <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Recent Complaints</h3>
+                        <select id="complaintFilter" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                    </div>
+                    <div id="complaintsList" class="space-y-4">
+                        <!-- Complaints will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Page -->
+    <div id="feedbackPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Feedback Center</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Share your experience and help us improve</p>
+            </div>
+
+            <!-- Quick Feedback Options -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-bolt text-yellow-500 mr-2"></i>Quick Feedback to Admin
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="submitQuickFeedback('excellent')" class="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition">
+                        <i class="fas fa-smile text-3xl text-green-600 dark:text-green-400 mb-2"></i>
+                        <p class="font-medium text-gray-900 dark:text-white">Excellent</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Amazing experience</p>
+                    </button>
+                    <button onclick="submitQuickFeedback('good')" class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition">
+                        <i class="fas fa-thumbs-up text-3xl text-blue-600 dark:text-blue-400 mb-2"></i>
+                        <p class="font-medium text-gray-900 dark:text-white">Good</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Satisfied</p>
+                    </button>
+                    <button onclick="submitQuickFeedback('average')" class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition">
+                        <i class="fas fa-meh text-3xl text-yellow-600 dark:text-yellow-400 mb-2"></i>
+                        <p class="font-medium text-gray-900 dark:text-white">Average</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Could be better</p>
+                    </button>
+                    <button onclick="submitQuickFeedback('poor')" class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition">
+                        <i class="fas fa-frown text-3xl text-red-600 dark:text-red-400 mb-2"></i>
+                        <p class="font-medium text-gray-900 dark:text-white">Poor</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Needs improvement</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Emoji Reactions Section -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-heart text-red-500 mr-2"></i>Send Emoji to Admin
+                </h3>
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <button onclick="sendEmojiToAdmin('😊')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😊</button>
+                    <button onclick="sendEmojiToAdmin('😍')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😍</button>
+                    <button onclick="sendEmojiToAdmin('👍')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">👍</button>
+                    <button onclick="sendEmojiToAdmin('🎉')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">🎉</button>
+                    <button onclick="sendEmojiToAdmin('🔥')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">🔥</button>
+                    <button onclick="sendEmojiToAdmin('💯')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">💯</button>
+                    <button onclick="sendEmojiToAdmin('😋')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😋</button>
+                    <button onclick="sendEmojiToAdmin('🙏')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">🙏</button>
+                    <button onclick="sendEmojiToAdmin('😐')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😐</button>
+                    <button onclick="sendEmojiToAdmin('😕')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😕</button>
+                    <button onclick="sendEmojiToAdmin('😢')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">😢</button>
+                    <button onclick="sendEmojiToAdmin('👎')" class="text-3xl hover:scale-125 transition-transform bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">👎</button>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Click any emoji to send it to the mess admin with your feedback!</p>
+            </div>
+
+            <!-- Detailed Feedback Form -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-edit text-primary-600 mr-2"></i>Detailed Feedback
+                    </h3>
+                    <form id="detailedFeedbackForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Meal Type</label>
+                            <select name="mealType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                <option value="">Select meal</option>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="dinner">Dinner</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dish Name</label>
+                            <input name="dishName" type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Enter dish name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rating</label>
+                            <div class="flex space-x-2">
+                                <button type="button" onclick="setRating(1)" class="rating-star text-2xl text-gray-300 hover:text-yellow-400">⭐</button>
+                                <button type="button" onclick="setRating(2)" class="rating-star text-2xl text-gray-300 hover:text-yellow-400">⭐</button>
+                                <button type="button" onclick="setRating(3)" class="rating-star text-2xl text-gray-300 hover:text-yellow-400">⭐</button>
+                                <button type="button" onclick="setRating(4)" class="rating-star text-2xl text-gray-300 hover:text-yellow-400">⭐</button>
+                                <button type="button" onclick="setRating(5)" class="rating-star text-2xl text-gray-300 hover:text-yellow-400">⭐</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Feedback Type</label>
+                            <select name="feedbackType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                <option value="">Select type</option>
+                                <option value="taste">Taste & Quality</option>
+                                <option value="quantity">Quantity</option>
+                                <option value="temperature">Temperature</option>
+                                <option value="presentation">Presentation</option>
+                                <option value="hygiene">Hygiene</option>
+                                <option value="service">Service</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Feedback</label>
+                            <textarea name="comment" rows="4" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Share your detailed feedback..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Photo (Optional)</label>
+                            <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
+                                <i class="fas fa-camera text-3xl text-gray-400 mb-2"></i>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Click to upload photo</p>
+                                <input type="file" accept="image/*" class="hidden">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Feedback
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Feedback Stats -->
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                            <i class="fas fa-chart-line text-green-600 mr-2"></i>Today's Feedback
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Total Feedback</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">156</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Average Rating</span>
+                                <span class="font-semibold text-yellow-500">4.2 ⭐</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Positive</span>
+                                <span class="font-semibold text-green-600">78%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Negative</span>
+                                <span class="font-semibold text-red-600">12%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                            <i class="fas fa-fire text-orange-600 mr-2"></i>Trending Topics
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Food Quality</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">42 mentions</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Service Speed</span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">28 mentions</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Hygiene</span>
+                                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">15 mentions</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Variety</span>
+                                <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">12 mentions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Feedback -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-comments text-blue-600 mr-2"></i>Recent Feedback
+                </h3>
+                <div class="space-y-4" id="recentFeedbackList">
+                    <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <img src="https://picsum.photos/seed/user1/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="font-medium text-gray-900 dark:text-white">Rahul Kumar</p>
+                                        <span class="text-yellow-500 text-sm">⭐⭐⭐⭐⭐</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Lunch - Paneer Butter Masala</p>
+                                    <p class="mt-1 text-gray-900 dark:text-white">Amazing taste! The paneer was so soft and the gravy was perfect. Keep it up! 👏</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">5 min ago</span>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <img src="https://picsum.photos/seed/user2/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="font-medium text-gray-900 dark:text-white">Priya Sharma</p>
+                                        <span class="text-yellow-500 text-sm">⭐⭐⭐</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Breakfast - Idli Sambar</p>
+                                    <p class="mt-1 text-gray-900 dark:text-white">Sambar was good but idlis were a bit hard. Please improve the quality.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">15 min ago</span>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <img src="https://picsum.photos/seed/user3/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="font-medium text-gray-900 dark:text-white">Amit Patel</p>
+                                        <span class="text-yellow-500 text-sm">⭐⭐⭐⭐</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Dinner - Mixed Veg</p>
+                                    <p class="mt-1 text-gray-900 dark:text-white">Good variety and taste. The vegetables were fresh and well-cooked.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">30 min ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Recommendations Page -->
+    <div id="recommendationsPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">AI-Powered Recommendations</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Personalized meal suggestions based on your preferences</p>
+            </div>
+
+            <!-- User Preferences -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-user-cog text-primary-600 mr-2"></i>Your Preferences
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Favorite Cuisine</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option>Indian</option>
+                            <option>Chinese</option>
+                            <option>Continental</option>
+                            <option>Mexican</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Spice Level</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option>Mild</option>
+                            <option>Medium</option>
+                            <option>Spicy</option>
+                            <option>Extra Spicy</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dietary Preference</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option>Vegetarian</option>
+                            <option>Non-Vegetarian</option>
+                            <option>Vegan</option>
+                            <option>Eggetarian</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Recommendations -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-gray-900 dark:text-white">Recommended for You</h4>
+                        <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">95% Match</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Paneer Tikka</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.8</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Dal Makhani</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.6</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Mixed Veg</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-gray-900 dark:text-white">Trending Now</h4>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Popular</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Butter Chicken</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.9</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Biryani</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.7</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Noodles</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-semibold text-gray-900 dark:text-white">Try Something New</h4>
+                        <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Explore</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Thai Curry</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.4</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Pasta</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.3</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">Spring Rolls</span>
+                            <span class="text-xs text-yellow-500">⭐ 4.1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg shadow p-6 text-white">
+                <h3 class="text-xl font-bold mb-4">
+                    <i class="fas fa-brain mr-2"></i>AI Insights
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <p class="text-sm opacity-90">Based on your ratings, you prefer:</p>
+                        <p class="font-semibold">Medium spicy vegetarian dishes</p>
+                    </div>
+                    <div>
+                        <p class="text-sm opacity-90">Best meal time for you:</p>
+                        <p class="font-semibold">Lunch (12:00 - 2:00 PM)</p>
+                    </div>
+                    <div>
+                        <p class="text-sm opacity-90">Next recommendation:</p>
+                        <p class="font-semibold">Try tomorrow's special dish</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nutrition Page -->
+    <div id="nutritionPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Nutrition Tracking</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Monitor your daily nutritional intake</p>
+            </div>
+
+            <!-- Daily Nutrition Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Calories</span>
+                        <i class="fas fa-fire text-orange-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 dark:text-white">1,850</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">of 2,200 goal</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-orange-500 h-2 rounded-full" style="width: 84%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Protein</span>
+                        <i class="fas fa-dumbbell text-blue-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 dark:text-white">65g</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">of 75g goal</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 87%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Carbs</span>
+                        <i class="fas fa-bread-slice text-yellow-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 dark:text-white">280g</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">of 300g goal</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 93%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Fats</span>
+                        <i class="fas fa-oil-can text-green-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-900 dark:text-white">55g</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">of 65g goal</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Breakdown -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Today's Meals</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Breakfast</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Idli, Sambar, Chutney</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-semibold text-gray-900 dark:text-white">420 cal</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">8:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Lunch</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Rice, Dal, Paneer, Roti</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-semibold text-gray-900 dark:text-white">780 cal</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">1:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Snacks</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Samosa, Tea</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-semibold text-gray-900 dark:text-white">250 cal</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">4:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">Dinner</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Rice, Chicken Curry, Salad</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-semibold text-gray-900 dark:text-white">400 cal</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">8:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Weekly Nutrition Trend</h3>
+                    <canvas id="nutritionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Nutrition Goals -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Your Nutrition Goals</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Weight Management</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Maintain current weight</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Daily Calorie Target</span>
+                                <span class="font-medium">2,200 cal</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Weekly Progress</span>
+                                <span class="font-medium text-green-600">On Track</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Muscle Building</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Increase protein intake</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Protein Target</span>
+                                <span class="font-medium">75g/day</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Weekly Progress</span>
+                                <span class="font-medium text-yellow-600">87% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Balanced Diet</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Maintain macro balance</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Macro Balance</span>
+                                <span class="font-medium text-green-600">Good</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Weekly Progress</span>
+                                <span class="font-medium text-green-600">On Track</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Page -->
+    <div id="socialPage" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Social Hub</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Connect with fellow food enthusiasts</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Feed -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Create Post -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <div class="flex items-start space-x-3">
+                            <img src="https://picsum.photos/seed/currentuser/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <textarea class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" rows="3" placeholder="Share your food experience..."></textarea>
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="flex space-x-2">
+                                        <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600">
+                                            <i class="fas fa-camera mr-1"></i>Photo
+                                        </button>
+                                        <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600">
+                                            <i class="fas fa-star mr-1"></i>Rate
+                                        </button>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                                        Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Posts -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <div class="flex items-start space-x-3">
+                            <img src="https://picsum.photos/seed/user1/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-gray-900 dark:text-white">John Doe</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">2 hours ago</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">5.0</span>
+                                    </div>
+                                </div>
+                                <p class="mt-2 text-gray-900 dark:text-white">Today's lunch was amazing! The paneer butter masala was perfectly cooked and the rotis were fresh. Highly recommend! 🍽️</p>
+                                <div class="mt-3">
+                                    <img src="https://picsum.photos/seed/food1/400/200.jpg" alt="Food" class="rounded-lg w-full">
+                                </div>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <div class="flex space-x-4">
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-red-600">
+                                            <i class="fas fa-heart"></i>
+                                            <span class="text-sm">24</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-blue-600">
+                                            <i class="fas fa-comment"></i>
+                                            <span class="text-sm">8</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-green-600">
+                                            <i class="fas fa-share"></i>
+                                            <span class="text-sm">Share</span>
+                                        </button>
+                                    </div>
+                                    <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <div class="flex items-start space-x-3">
+                            <img src="https://picsum.photos/seed/user2/40/40.jpg" alt="User" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-medium text-gray-900 dark:text-white">Sarah Smith</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">4 hours ago</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-yellow-500">⭐⭐⭐⭐</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">4.0</span>
+                                    </div>
+                                </div>
+                                <p class="mt-2 text-gray-900 dark:text-white">The breakfast was good but the coffee could be better. Overall decent experience! ☕</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <div class="flex space-x-4">
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-red-600">
+                                            <i class="fas fa-heart"></i>
+                                            <span class="text-sm">15</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-blue-600">
+                                            <i class="fas fa-comment"></i>
+                                            <span class="text-sm">3</span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-green-600">
+                                            <i class="fas fa-share"></i>
+                                            <span class="text-sm">Share</span>
+                                        </button>
+                                    </div>
+                                    <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Top Reviewers -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Top Reviewers</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://picsum.photos/seed/top1/32/32.jpg" alt="User" class="w-8 h-8 rounded-full">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Mike Johnson</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Level 5</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">342</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">reviews</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://picsum.photos/seed/top2/32/32.jpg" alt="User" class="w-8 h-8 rounded-full">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Emily Chen</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Level 4</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">289</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">reviews</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://picsum.photos/seed/top3/32/32.jpg" alt="User" class="w-8 h-8 rounded-full">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">David Lee</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Level 4</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">256</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">reviews</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trending Dishes -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Trending Dishes</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Butter Chicken</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">128 reviews today</p>
+                                </div>
+                                <span class="text-yellow-500 text-sm">⭐ 4.8</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Paneer Tikka</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">95 reviews today</p>
+                                </div>
+                                <span class="text-yellow-500 text-sm">⭐ 4.7</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Dal Makhani</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">87 reviews today</p>
+                                </div>
+                                <span class="text-yellow-500 text-sm">⭐ 4.6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Challenges -->
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-6 rounded-lg shadow text-white">
+                        <h3 class="text-lg font-bold mb-2">Weekly Challenge</h3>
+                        <p class="text-sm mb-3">Review 5 different dishes this week!</p>
+                        <div class="bg-white/20 rounded-full h-2 mb-2">
+                            <div class="bg-white h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <p class="text-xs">3 of 5 completed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Modal -->
+    <div id="complaintModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Raise a Complaint</h3>
+                <form id="complaintForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                        <select id="complaintCategory" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="hygiene">Hygiene</option>
+                            <option value="taste">Taste</option>
+                            <option value="quantity">Quantity</option>
+                            <option value="delay">Service Delay</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                        <textarea id="complaintDescription" rows="4" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Describe your complaint..."></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Priority</label>
+                        <select id="complaintPriority" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancelComplaint" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="hidden fixed top-16 right-4 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-40">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Notifications</h3>
+        </div>
+        <div id="notificationsList" class="max-h-96 overflow-y-auto">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Voice Input Modal -->
+    <div id="voiceModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="text-center">
+                <i class="fas fa-microphone text-6xl text-red-500 mb-4 animate-pulse"></i>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Listening...</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Speak your feedback now</p>
+                <button id="stopVoiceRecording" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                    Stop Recording
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="text-center mb-4">
+                <i class="fas fa-user-plus text-4xl text-primary-600 dark:text-primary-400 mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Registration Required</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Please register to access Mess Buddy AI features</p>
+            </div>
+            <form id="registrationForm" class="space-y-4">
+                <div>
+                    <label for="regName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
+                    <input id="regName" name="regName" type="text" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label for="regEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
+                    <input id="regEmail" name="regEmail" type="email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="your.email@example.com">
+                </div>
+                <div>
+                    <label for="regPhone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number *</label>
+                    <input id="regPhone" name="regPhone" type="tel" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="+91 98765 43210">
+                </div>
+                <div>
+                    <label for="regHostel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hostel/Room Number *</label>
+                    <input id="regHostel" name="regHostel" type="text" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Block A, Room 101">
+                </div>
+                <div>
+                    <label for="regRole" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Role *</label>
+                    <select id="regRole" name="regRole" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="staff">Mess Staff</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="regPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password *</label>
+                    <input id="regPassword" name="regPassword" type="password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Create a strong password">
+                </div>
+                <div>
+                    <label for="regConfirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm Password *</label>
+                    <input id="regConfirmPassword" name="regConfirmPassword" type="password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Confirm your password">
+                </div>
+                <div class="flex items-center">
+                    <input id="agreeTerms" name="agreeTerms" type="checkbox" required class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <label for="agreeTerms" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                        I agree to the <a href="#" class="text-primary-600 hover:text-primary-500">Terms & Conditions</a>
+                    </label>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancelRegistration" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "mess-buddy-react",
+  "version": "1.0.0",
+  "description": "Modern Mess Buddy AI with React and Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.2.4",
+    "chart.js": "^4.2.1",
+    "react-chartjs-2": "^5.2.0",
+    "framer-motion": "^10.0.1",
+    "lucide-react": "^0.323.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
